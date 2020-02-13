@@ -1,11 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <header>Welcome to the Bug Tracker</header>
-</body>
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+
+    <body>
+        <header>
+            <h1>Welcome to the Bug Tracker</h1>
+        </header>
+
+        <nav>
+            <button>
+                <a href="/logout/">
+                    Log Out
+                </a>
+            </button>
+            <button>
+                <a href="/newticket/">
+                    Add a New Ticket
+                </a>
+            </button>
+        </nav>
+
+        {% for x in data %}
+        <ul>
+            <li>Title: {{x.title}}</li>
+            <li>Time Created: {{x.time}}</li>
+            <li>Description: {{x.description}}</li>
+            <li>Name: {{ x.user_name }}</li>
+            <li>Person Assigned: {{x.assigned_user}}</li>
+            <li>Person Completed: {{x.completed_user}}</li>
+            <li>Ticket Status: {{x.ticket_status}}</li>
+        </ul>
+        <button>
+            <a href="/updateticket/">
+                Update Ticket!
+            </a>
+        </button>
+        {% endfor %}
+    </body>
+
 </html>
