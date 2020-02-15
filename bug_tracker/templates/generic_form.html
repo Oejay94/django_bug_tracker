@@ -4,10 +4,12 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
+        <title>Form Page</title>
     </head>
     {% load crispy_forms_tags %}
     <body>
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'generic_form/style.css' %}" /> 
 
         <form action="" method="post">
             {% csrf_token %}

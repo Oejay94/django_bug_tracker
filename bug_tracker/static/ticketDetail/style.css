@@ -1,0 +1,56 @@
+.topnav {
+    background-color: #333;
+    overflow: hidden;
+  }
+  
+  /* Style the links inside the navigation bar */
+  .topnav a {
+    float: left;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    position: relative;
+    left: 35%;
+  }
+  
+  /* Change the color of links on hover */
+  .topnav a:hover {
+    background-color: #ddd;
+    color: black;
+  }
+  
+  /* Add a color to the active/current link */
+  .topnav a.active {
+    background-color: #4CAF50;
+    color: white;
+  }
+
+  #detailContent {
+    margin: auto;
+    margin-top: 40px;
+    width: 50%;
+    border: 3px solid black;
+    padding: 40px;
+  }
+
+#ticketButtons{
+    overflow: hidden;
+}
+
+#ticketButtons a {
+    float: left;
+    color: black;
+    text-align: center;
+    padding: 10px 14px;
+    text-decoration: none;
+    font-size: 16px;
+    position: relative;
+    left: 25%;
+}
+
+#ticketButtons a:hover {
+    background-color: #ddd;
+    color: black;
+  }

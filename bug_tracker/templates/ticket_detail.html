@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Ticket Detail</title>
+    </head>
+
+    <body>
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'ticketDetail/style.css' %}" />
+        <header style="text-align: center;">
+            <h1>Ticket Detail Page</h1>
+        </header>
+
+        <div class="topnav">
+            <a id="home" href="/home/">Home</a>
+            <a id="newticket" href="/newticket/">Add a New Ticket</a>
+            <a id="logout" href="/logout/">Log Out</a>
+            {% if user.is_staff %}<a id="signup" href="/signup/">Create an account</a>{% endif %}
+        </div>
+
+        <div id="detailContent">
+            <p>{{data.title}}</p>
+            <p>{{data.description}}</p>
+            <p>Created by: <a href="/userpage/{{data.user_name.id}}">{{data.user_name}}</a></p>
+            <p>Assigned to: {{data.assigned_user}}</p>
+            <p>Completed by: {{data.completed_user}}</p>
+            <p>Created on: {{data.time}}</p>
+            <p>Status: {{data.ticket_status}}</p>
+            <div id="ticketButtons">
+                <a href="/updateticket/{{data.id}}">
+                    Update Ticket
+                </a>
+
+                <a href="/completedticket/{{data.id}}/">
+                    Complete Ticket
+                </a>
+
+                <a href="/invalidticket/{{data.id}}/">
+                    Invalid Ticket
+                </a>
+            </div>
+        </div>
+    </body>
+
+</html>

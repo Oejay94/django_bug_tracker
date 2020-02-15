@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="widevice-wi initial-scale=1.0">
+        <title>{{users.username}}'s Page</title>
+    </head>
+
+    <body>
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'userPage/style.css' %}" />
+        <header>
+            <h1 style="text-align: center;">This is {{users.username}}'s Page </h1>
+        </header>
+
+        <div class="topnav">
+            <a id="home" href="/home/">Home</a>
+            <a id="newticket" href="/newticket/">Add a New Ticket</a>
+            <a id="logout" href="/logout/">Log Out</a>
+            {% if user.is_staff %}<a id="signup" href="/signup/">Create an account</a>{% endif %}
+        </div>
+
+        <br>
+        <div id="column1">
+            <h2>Filed Tickets</h2>
+            <ul>
+                {% for file in files %}
+                <li>{{file.title}}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div id="column2">
+            <h2>Assinged Tickets</h2>
+            <ul>
+                {% for assign in assigned %}
+                <li>{{assign.title}}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div id="column3">
+            <h2>Completed Tickets</h2>
+            <ul>
+                {% for complete in completed %}
+                <li>{{complete.title}}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </body>
+
+</html>

@@ -4,42 +4,31 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
+        <title>Home Page</title>
     </head>
 
     <body>
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'home/style.css' %}" />
         <header>
-            <h1>Welcome to the Bug Tracker</h1>
+            <h1 style="text-align: center;">Welcome to the Bug Tracker</h1>
         </header>
-
-        <nav>
-            <button>
-                <a href="/logout/">
-                    Log Out
-                </a>
-            </button>
-            <button>
-                <a href="/newticket/">
-                    Add a New Ticket
-                </a>
-            </button>
-        </nav>
-
-        {% for x in data %}
-        <ul>
-            <li>Title: {{x.title}}</li>
-            <li>Time Created: {{x.time}}</li>
-            <li>Description: {{x.description}}</li>
-            <li>Name: {{ x.user_name }}</li>
-            <li>Person Assigned: {{x.assigned_user}}</li>
-            <li>Person Completed: {{x.completed_user}}</li>
-            <li>Ticket Status: {{x.ticket_status}}</li>
-        </ul>
-        <button>
-            <a href="/updateticket/">
-                Update Ticket!
-            </a>
-        </button>
+        <div class="topnav">
+            <a id="newticket" href="/newticket/">Add a New Ticket</a>
+            <a id="logout" href="/logout/">Log Out</a>
+            {% if user.is_staff %}<a id="signup" href="/signup/">Create an account</a>{% endif %}
+        </div>
+        <br>
+        {% for y in data %}
+        <div id="card">
+            <ul>
+                <li>Title: <a href="/ticket_detail/{{y.id}}">{{y.title}}</a></li>
+                <li>Description: {{y.description}}</li>
+                <li>Created by: {{ y.user_name }}</li>
+                <li>Ticket Status: {{y.ticket_status}}</li>
+            </ul>
+        </div>
+        <br>
         {% endfor %}
     </body>
 

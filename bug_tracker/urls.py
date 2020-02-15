@@ -21,10 +21,15 @@ from bug_tracker import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.home, name='home'),
+    path('home/', views.home, name='home'),
+    path('ticket_detail/<int:id>/', views.ticket_detail, name='ticketdetail'),
     path('signup/', views.signup, name='signup'),
-    path('login/', views.login_view, name='login'),
+    path('', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
     path('newticket/', views.newticket, name='newticket'),
-    path('updateticket/', views.updateticket, name='updateticket')
+    path('updateticket/<int:id>/', views.updateticket, name='update_ticket'),
+    path('completedticket/<int:id>/',
+         views.completed_ticket, name='completed_ticket'),
+    path('invalidticket/<int:id>/', views.invalid_ticket, name='invalid_ticker'),
+    path('userpage/<int:id>/', views.userpage, name='userpage')
 ]

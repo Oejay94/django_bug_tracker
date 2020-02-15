@@ -14,6 +14,12 @@ def home(request):
     data = TrackerTicket.objects.all().order_by("-ticket_status")
     return render(request, html, {'data': data})
 
+@login_required
+def ticket_detail(request, id):
+    html = 'ticket_detail.html'
+    data = TrackerTicket.objects.get(id=id)
+    return render(request, html, {'data': data})
+
 
 def login_view(request):
     html = 'generic_form.html'
@@ -35,7 +41,7 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-    return HttpResponseRedirect(request.GET.get('next', '/'))
+    return HttpResponseRedirect(request.GET.get('next', '/home/'))
 
 
 @staff_member_required
@@ -77,8 +83,9 @@ def newticket(request):
 
     return render(request, html, {'form': form})
 
+
 @login_required
-def updateticket(request):
+def updateticket(request, id):
     html = 'generic_form.html'
 
     if request.method == 'POST':
@@ -86,8 +93,8 @@ def updateticket(request):
 
         if form.is_valid():
             data = form.cleaned_data
-            TrackerTicket.objects.create(
-                ticket_status=data['ticket_status'],
+            TrackerTicket.objects.filter(id=id).update(
+                ticket_status='In Progress',
                 assigned_user=data['assigned_user']
             )
             return HttpResponseRedirect(reverse('home'))
@@ -95,3 +102,53 @@ def updateticket(request):
         form = UpdateTicket()
 
     return render(request, html, {'form': form})
+
+
+@login_required
+def completed_ticket(request, id):
+    html = 'generic_form.html'
+
+    if request.method == 'POST':
+        form = CompletedTicket(request.POST)
+
+        if form.is_valid():
+            data = form.cleaned_data
+            TrackerTicket.objects.filter(id=id).update(
+                ticket_status='Complete',
+                completed_user=data['completed_user']
+            )
+            return HttpResponseRedirect(reverse('home'))
+    else:
+        form = CompletedTicket()
+
+    return render(request, html, {'form': form})
+
+@login_required
+def invalid_ticket(request, id):
+    html = 'generic_form.html'
+
+    if request.method == 'POST':
+        form = InvalidTicket(request.POST)
+
+        if form.is_valid():
+            data = form.cleaned_data
+            TrackerTicket.objects.filter(id=id).update(
+                assigned_user='None',
+                completed_user='None'
+            )
+            return HttpResponseRedirect(reverse('home'))
+    else:
+        form = InvalidTicket()
+
+    return render(request, html, {'form': form})
+
+@login_required
+def userpage(request, id):
+    html = 'userPage.html'
+    user = CustomUser.objects.get(id=id)
+    filed = TrackerTicket.objects.filter(user_name=user)
+    assigned = TrackerTicket.objects.filter(assigned_user=user)
+    completed = TrackerTicket.objects.filter(completed_user=user)
+    return render(request, html, {'users': user, 'files': filed, 'assigned': assigned, 'completed': completed})
+
+

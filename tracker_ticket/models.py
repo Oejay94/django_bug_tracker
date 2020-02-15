@@ -26,4 +26,4 @@ class TrackerTicket(models.Model):
     completed_user = models.ForeignKey(
         CustomUser, related_name='ticket_completed_user', on_delete=models.CASCADE, null=True)
     ticket_status = models.CharField(
-        max_length=15, choices=TICKET_STATUS_CHOICES, default=New)
+        max_length=15, choices=TICKET_STATUS_CHOICES, default=New, null=True)
