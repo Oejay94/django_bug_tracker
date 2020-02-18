@@ -35,6 +35,10 @@
     padding: 40px;
   }
 
+  #detailContent p {
+    overflow-wrap: break-word;
+  }
+
 #ticketButtons{
     overflow: hidden;
 }
@@ -47,7 +51,7 @@
     text-decoration: none;
     font-size: 16px;
     position: relative;
-    left: 25%;
+    left: 19%;
 }
 
 #ticketButtons a:hover {

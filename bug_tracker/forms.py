@@ -29,6 +29,7 @@ class NewTicketForm(forms.ModelForm):
             'description'
         ]
 
+
 class UpdateTicket(forms.ModelForm):
     class Meta:
         model = TrackerTicket
@@ -36,12 +37,14 @@ class UpdateTicket(forms.ModelForm):
             'assigned_user'
         ]
 
+
 class CompletedTicket(forms.ModelForm):
     class Meta:
         model = TrackerTicket
         fields = [
             'completed_user'
         ]
+
 
 class InvalidTicket(forms.ModelForm):
     class Meta:

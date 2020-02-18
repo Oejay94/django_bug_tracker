@@ -14,6 +14,7 @@ def home(request):
     data = TrackerTicket.objects.all().order_by("-ticket_status")
     return render(request, html, {'data': data})
 
+
 @login_required
 def ticket_detail(request, id):
     html = 'ticket_detail.html'
@@ -106,41 +107,24 @@ def updateticket(request, id):
 
 @login_required
 def completed_ticket(request, id):
-    html = 'generic_form.html'
+    trackerTicket = TrackerTicket.objects.get(id=id)
+    trackerTicket.assigned_user = None
+    trackerTicket.completed_user = request.user
+    trackerTicket.ticket_status = 'Complete'
+    trackerTicket.save()
+    return HttpResponseRedirect(reverse('home'))
 
-    if request.method == 'POST':
-        form = CompletedTicket(request.POST)
-
-        if form.is_valid():
-            data = form.cleaned_data
-            TrackerTicket.objects.filter(id=id).update(
-                ticket_status='Complete',
-                completed_user=data['completed_user']
-            )
-            return HttpResponseRedirect(reverse('home'))
-    else:
-        form = CompletedTicket()
-
-    return render(request, html, {'form': form})
 
 @login_required
 def invalid_ticket(request, id):
-    html = 'generic_form.html'
 
-    if request.method == 'POST':
-        form = InvalidTicket(request.POST)
+    trackerTicket = TrackerTicket.objects.get(id=id)
+    trackerTicket.assigned_user = None
+    trackerTicket.completed_user = None
+    trackerTicket.ticket_status = 'Invalid'
+    trackerTicket.save()
+    return HttpResponseRedirect(reverse('home'))
 
-        if form.is_valid():
-            data = form.cleaned_data
-            TrackerTicket.objects.filter(id=id).update(
-                assigned_user='None',
-                completed_user='None'
-            )
-            return HttpResponseRedirect(reverse('home'))
-    else:
-        form = InvalidTicket()
-
-    return render(request, html, {'form': form})
 
 @login_required
 def userpage(request, id):
@@ -150,5 +134,3 @@ def userpage(request, id):
     assigned = TrackerTicket.objects.filter(assigned_user=user)
     completed = TrackerTicket.objects.filter(completed_user=user)
     return render(request, html, {'users': user, 'files': filed, 'assigned': assigned, 'completed': completed})
-
-

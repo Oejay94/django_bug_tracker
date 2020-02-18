@@ -28,8 +28,7 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     path('newticket/', views.newticket, name='newticket'),
     path('updateticket/<int:id>/', views.updateticket, name='update_ticket'),
-    path('completedticket/<int:id>/',
-         views.completed_ticket, name='completed_ticket'),
-    path('invalidticket/<int:id>/', views.invalid_ticket, name='invalid_ticker'),
+    path('completedticket/<int:id>/', views.completed_ticket, name='completed_ticket'),
+    path('invalidticket/<int:id>/', views.invalid_ticket),
     path('userpage/<int:id>/', views.userpage, name='userpage')
 ]

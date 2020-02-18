@@ -22,15 +22,32 @@
         </div>
 
         <div id="detailContent">
-            <p>{{data.title}}</p>
-            <p>{{data.description}}</p>
+            <h2 style="text-align: center;">{{data.title}}</h2>
+            <br>
+            <p>{{ data.description }}</p>
+            <br>
             <p>Created by: <a href="/userpage/{{data.user_name.id}}">{{data.user_name}}</a></p>
-            <p>Assigned to: {{data.assigned_user}}</p>
-            <p>Completed by: {{data.completed_user}}</p>
+            <p>Assigned to:
+                {% if data.assigned_user is not None %}
+                <a href="/userpage/{{data.assigned_user.id}}">{{data.assigned_user}}</a>
+                {% else %}
+                {{data.assigned_user}}
+                {% endif %}
+            </p>
+
+            <p>Completed by:
+                {% if data.completed_user is not None %}
+                <a href="/userpage/{{data.completed_user.id}}/">{{data.completed_user}}</a>
+                {% else %}
+                {{data.completed_user}}
+                {% endif %}
+            </p>
+
             <p>Created on: {{data.time}}</p>
             <p>Status: {{data.ticket_status}}</p>
+            <br>
             <div id="ticketButtons">
-                <a href="/updateticket/{{data.id}}">
+                <a href="/updateticket/{{data.id}}/">
                     Update Ticket
                 </a>
 
