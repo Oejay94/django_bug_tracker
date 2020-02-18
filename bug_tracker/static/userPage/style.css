@@ -1,34 +1,20 @@
-#column1{
-    text-align: left;
-    list-style-position: inside;
+h2 {
+  text-align: center;
 }
 
-#column1 li {
-    position: relative;
-    left: -25px;
+#column1 {
+  columns: 1;
+  border: 1px solid black;
 }
 
-
-#column2{
-    text-align: center;
-    margin-top: -85px;
-    list-style-position: inside;
+#column2 {
+  columns: 1;
+  border: 1px solid black;
 }
 
-#column2 li {
-    position: relative;
-    left: -35px;
-}
-
-#column3{
-    text-align: right;
-    margin-top: -85px;
-    list-style-position: inside;
-}
-
-#column3 li {
-    position: relative;
-    left: -55px;
+#column3 {
+  columns: 1;
+  border: 1px solid black;
 }
 
 .topnav {

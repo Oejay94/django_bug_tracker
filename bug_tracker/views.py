@@ -3,7 +3,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 
-from bug_tracker.forms import SignUpForm, LoginForm, NewTicketForm, UpdateTicket, CompletedTicket, InvalidTicket
+from bug_tracker.forms import SignUpForm, LoginForm, NewTicketForm, UpdateTicket
 from custom_user.models import CustomUser
 from tracker_ticket.models import TrackerTicket
 
@@ -11,8 +11,11 @@ from tracker_ticket.models import TrackerTicket
 @login_required
 def home(request):
     html = 'home.html'
-    data = TrackerTicket.objects.all().order_by("-ticket_status")
-    return render(request, html, {'data': data})
+    data = TrackerTicket.objects.filter(ticket_status=TrackerTicket.New).order_by("-time")
+    in_progress = TrackerTicket.objects.filter(ticket_status=TrackerTicket.In_Progress).order_by("-time")
+    done = TrackerTicket.objects.filter(ticket_status=TrackerTicket.Done).order_by("-time")
+    invalid = TrackerTicket.objects.filter(ticket_status=TrackerTicket.Invalid).order_by("-time")
+    return render(request, html, {'data': data, 'in_progress': in_progress, 'done': done, 'invalid': invalid})
 
 
 @login_required
@@ -110,7 +113,7 @@ def completed_ticket(request, id):
     trackerTicket = TrackerTicket.objects.get(id=id)
     trackerTicket.assigned_user = None
     trackerTicket.completed_user = request.user
-    trackerTicket.ticket_status = 'Complete'
+    trackerTicket.ticket_status = 'Done'
     trackerTicket.save()
     return HttpResponseRedirect(reverse('home'))
 

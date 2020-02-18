@@ -26,7 +26,7 @@
             <br>
             <p>{{ data.description }}</p>
             <br>
-            <p>Created by: <a href="/userpage/{{data.user_name.id}}">{{data.user_name}}</a></p>
+            <p>Created by: <a href="/userpage/{{data.user_name.id}}/">{{data.user_name}}</a></p>
             <p>Assigned to:
                 {% if data.assigned_user is not None %}
                 <a href="/userpage/{{data.assigned_user.id}}">{{data.assigned_user}}</a>

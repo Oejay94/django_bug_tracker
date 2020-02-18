@@ -36,19 +36,3 @@ class UpdateTicket(forms.ModelForm):
         fields = [
             'assigned_user'
         ]
-
-
-class CompletedTicket(forms.ModelForm):
-    class Meta:
-        model = TrackerTicket
-        fields = [
-            'completed_user'
-        ]
-
-
-class InvalidTicket(forms.ModelForm):
-    class Meta:
-        model = TrackerTicket
-        fields = [
-            'ticket_status'
-        ]

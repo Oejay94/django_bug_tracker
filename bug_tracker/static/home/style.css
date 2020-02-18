@@ -1,11 +1,22 @@
-#card {
-    margin: auto;
-    width: 50%;
-    border: 3px solid black;
-    padding: 10px;
-    overflow-wrap: break-word;
+#column1 {
+  columns: 1;
+  border: 1px solid black;
 }
 
+#column2 {
+  columns: 1;
+  border: 1px solid black;
+}
+
+#column3 {
+  columns: 1;
+  border: 1px solid black;
+}
+
+#column4 {
+  columns: 1;
+  border: 1px solid black;
+}
 /* Add a black background color to the top navigation */
 .topnav {
     background-color: #333;
@@ -26,7 +37,7 @@
   
   /* Change the color of links on hover */
   .topnav a:hover {
-    background-color: #ddd;
+    background-color: white;
     color: black;
   }
   
