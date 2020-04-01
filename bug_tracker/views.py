@@ -2,8 +2,9 @@ from django.shortcuts import render, reverse, HttpResponseRedirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
+from django.views import View
 
-from bug_tracker.forms import SignUpForm, LoginForm, NewTicketForm, UpdateTicket
+from bug_tracker.forms import SignUpForm, LoginForm, NewTicketForm, UpdateTicket, CompleteTicketForm, InvalidTicketForm
 from custom_user.models import CustomUser
 from tracker_ticket.models import TrackerTicket
 
@@ -99,7 +100,9 @@ def updateticket(request, id):
             data = form.cleaned_data
             TrackerTicket.objects.filter(id=id).update(
                 ticket_status='In Progress',
-                assigned_user=data['assigned_user']
+                assigned_user=data['assigned_user'],
+                title=data['title'],
+                description=data['description']
             )
             return HttpResponseRedirect(reverse('home'))
     else:
@@ -108,25 +111,59 @@ def updateticket(request, id):
     return render(request, html, {'form': form})
 
 
+
 @login_required
 def completed_ticket(request, id):
-    trackerTicket = TrackerTicket.objects.get(id=id)
-    trackerTicket.assigned_user = None
-    trackerTicket.completed_user = request.user
-    trackerTicket.ticket_status = 'Done'
-    trackerTicket.save()
-    return HttpResponseRedirect(reverse('home'))
+    html = 'generic_form.html'
 
+    if request.method == 'POST':
+        form = CompleteTicketForm(request.POST)
+
+        if form.is_valid():
+            data = form.cleaned_data
+            TrackerTicket.objects.filter(id=id).update(
+                assigned_user=None,
+                completed_user=request.user,
+                ticket_status='Done',
+                title=data['title'],
+                description=data['description']
+            )
+            return HttpResponseRedirect(reverse('home'))
+    else:
+        form = CompleteTicketForm()
+
+    return render(request, html, {'form': form})
+ 
 
 @login_required
 def invalid_ticket(request, id):
+    html = 'generic_form.html'
 
-    trackerTicket = TrackerTicket.objects.get(id=id)
-    trackerTicket.assigned_user = None
-    trackerTicket.completed_user = None
-    trackerTicket.ticket_status = 'Invalid'
-    trackerTicket.save()
-    return HttpResponseRedirect(reverse('home'))
+    if request.method == 'POST':
+        form = InvalidTicketForm(request.POST)
+
+        if form.is_valid():
+            data = form.cleaned_data
+            TrackerTicket.objects.filter(id=id).update(
+                title=data['title'],
+                description=data['description'],
+                assigned_user=None,
+                completed_user=None,
+                ticket_status='Invalid'
+            )
+            return HttpResponseRedirect(reverse('home'))
+
+    else:
+        form = InvalidTicketForm()
+
+        return render(request, html, {'form': form})
+
+    # trackerTicket = TrackerTicket.objects.get(id=id)
+    # trackerTicket.assigned_user = None
+    # trackerTicket.completed_user = None
+    # trackerTicket.ticket_status = 'Invalid'
+    # trackerTicket.save()
+    # return HttpResponseRedirect(reverse('home'))
 
 
 @login_required

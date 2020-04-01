@@ -1,4 +1,4 @@
 {
-    "python.pythonPath": ".venv/bin/python",
+    "python.pythonPath": "/Users/josephbrown/KenzieProjects/Q4/django_bug_tracker/.venv/bin/python3",
     "python.linting.enabled": false
 }

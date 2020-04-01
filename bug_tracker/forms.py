@@ -30,9 +30,17 @@ class NewTicketForm(forms.ModelForm):
         ]
 
 
-class UpdateTicket(forms.ModelForm):
-    class Meta:
-        model = TrackerTicket
-        fields = [
-            'assigned_user'
-        ]
+class UpdateTicket(forms.Form):
+    title = forms.CharField(max_length=30)
+    description = forms.CharField(widget=forms.Textarea())
+    assigned_user = forms.ModelChoiceField(queryset=CustomUser.objects.all())
+
+
+class CompleteTicketForm(forms.Form):
+    title = forms.CharField(max_length=30)
+    description = forms.CharField(widget=forms.Textarea())
+
+
+class InvalidTicketForm(forms.Form):
+    title = forms.CharField(max_length=30)
+    description = forms.CharField(widget=forms.Textarea())
